@@ -20,6 +20,21 @@ const initialValue: TodoType[] = [
     title: "Lorem ipsum",
     completed: true,
   },
+  {
+    id: 2,
+    title: "Lorem ipsum",
+    completed: true,
+  },
+  {
+    id: 2,
+    title: "Lorem ipsum",
+    completed: true,
+  },
+  {
+    id: 2,
+    title: "Lorem ipsum",
+    completed: true,
+  },
 ];
 
 export const TodoStore = create<TodoStoreType>()((set) => ({
