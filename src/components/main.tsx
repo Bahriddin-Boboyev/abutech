@@ -24,17 +24,24 @@ const useStyles = makeStyles({
   },
 });
 
+type saveTodoValueType = {
+  title: string;
+  id: number;
+};
+
 export function Main() {
   const { todos, completeTodo, deleteTodo } = TodoStore((state) => state);
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const saveTodoValue = useRef<string>("");
+  const saveTodoValue = useRef<saveTodoValueType | {}>({});
   const [change, setChange] = useState<string>("");
 
-  const handleClick = (value: string) => {
+  const handleClick = (item: saveTodoValueType) => {
     setOpen((prev) => !prev);
-    saveTodoValue.current = value;
-    setChange(saveTodoValue.current);
+    saveTodoValue.current = { title: item.title, id: item.id };
+    if ("title" in saveTodoValue.current) {
+      setChange(saveTodoValue.current.title as string);
+    }
   };
 
   return (
@@ -110,7 +117,9 @@ export function Main() {
                 <IconButton
                   color="primary"
                   size="small"
-                  onClick={() => handleClick(item.title)}
+                  onClick={() =>
+                    handleClick({ title: item.title, id: item.id })
+                  }
                 >
                   <EditIcon color="primary" />
                 </IconButton>
@@ -122,6 +131,11 @@ export function Main() {
             setOpen={setOpen}
             change={change}
             setChange={setChange}
+            id={
+              "id" in saveTodoValue.current
+                ? saveTodoValue.current.id
+                : undefined
+            }
           />
         </List>
       </Grid>

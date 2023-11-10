@@ -1,5 +1,6 @@
 import * as React from "react";
 import { TransitionProps } from "@mui/material/transitions";
+import { TodoStore } from "../store";
 import {
   Slide,
   DialogTitle,
@@ -24,11 +25,20 @@ interface Props {
   setOpen: (value: boolean) => void;
   change: string;
   setChange: (value: string) => void;
+  id: number | undefined;
 }
 
-export const Modal = ({ open, setOpen, change, setChange }: Props) => {
+export const Modal = ({ open, setOpen, change, setChange, id }: Props) => {
+  const { editTodo } = TodoStore((state) => state);
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    handleClose();
+    if (id) {
+      editTodo(id, change);
+    }
   };
 
   return (
@@ -53,7 +63,7 @@ export const Modal = ({ open, setOpen, change, setChange }: Props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={handleSubmit}>Save</Button>
         </DialogActions>
       </Dialog>
     </>
