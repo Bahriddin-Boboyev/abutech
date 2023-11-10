@@ -1,8 +1,7 @@
 import { Container, Button, Box, Typography, Stack } from "@mui/material";
 import { TodoStore } from "./store";
 import { useState, FormEvent } from "react";
-import { TodoInput } from "./components/input";
-import { Main } from "./components/main";
+import { TodoInput, Main } from "./components";
 import { TodoType } from "../types";
 
 const App = () => {
@@ -40,6 +39,7 @@ const App = () => {
               color="primary"
               sx={{ width: "150px" }}
               type="submit"
+              disabled={!todoValue}
             >
               Add
             </Button>
