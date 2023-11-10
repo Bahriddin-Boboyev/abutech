@@ -41,9 +41,10 @@ export function Main() {
     <Box
       sx={{
         border: "1px solid white",
-        minHeight: "400px",
+        height: "400px",
         mt: "20px",
         borderRadius: "5px",
+        overflowY: "scroll",
       }}
     >
       <Grid item xs={6}>
