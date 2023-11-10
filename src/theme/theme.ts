@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { blue, grey } from "@mui/material/colors";
+import { blue, blueGrey } from "@mui/material/colors";
 
 export const theme = createTheme({
   palette: {
@@ -7,8 +7,15 @@ export const theme = createTheme({
       main: blue[800],
     },
     action: {
-      disabledBackground: grey[700],
+      disabledBackground: blueGrey[700],
       disabled: "white",
     },
+  },
+  typography: {
+    fontFamily: `"Montserrat", "Arial", sans-serif`,
+    fontSize: 14,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
   },
 });
