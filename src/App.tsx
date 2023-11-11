@@ -1,12 +1,13 @@
 import { Container, Button, Box, Typography, Stack } from "@mui/material";
 import { TodoStore } from "./store";
 import { useState, FormEvent } from "react";
-import { TodoInput, Main } from "./components";
+import { TodoInput, Main, MuiSnackbar } from "./components";
 import { TodoType } from "../types";
 
 const App = () => {
   const { addTodo, todos } = TodoStore((state) => state);
   const [todoValue, setTodoValue] = useState<string>("");
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ const App = () => {
       completed: false,
     };
     addTodo(todo);
+    setOpen(true);
     setTodoValue("");
   };
 
@@ -46,6 +48,11 @@ const App = () => {
           </Box>
           <Main />
         </form>
+        <MuiSnackbar
+          open={open}
+          setOpen={setOpen}
+          message={"User added successfully!"}
+        />
       </Stack>
     </Container>
   );
