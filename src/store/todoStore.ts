@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { TodoType } from "../../types";
+import { TodoType, dataType } from "../../types";
 
 interface TodoStoreType {
   todos: TodoType[] | [];

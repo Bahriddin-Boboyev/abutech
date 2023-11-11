@@ -1,4 +1,4 @@
-import { TodoStore } from "../store";
+import { TodoStore } from "../store/todoStore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { makeStyles } from "@mui/styles";

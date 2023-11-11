@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TransitionProps } from "@mui/material/transitions";
-import { TodoStore } from "../store";
+import { TodoStore } from "../store/todoStore";
 import {
   Slide,
   DialogTitle,

@@ -1,59 +1,32 @@
-import { Container, Button, Box, Typography, Stack } from "@mui/material";
-import { TodoStore } from "./store";
-import { useState, FormEvent } from "react";
-import { TodoInput, Main, MuiSnackbar } from "./components";
-import { TodoType } from "../types";
+import { Container } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import { Todo, Products } from "./pages";
+import { Typography } from "@mui/material";
 
 const App = () => {
-  const { addTodo, todos } = TodoStore((state) => state);
-  const [todoValue, setTodoValue] = useState<string>("");
-  const [open, setOpen] = useState(false);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const todo: TodoType = {
-      id: todos.length > 0 ? todos.slice(-1)[0].id + 1 : 1,
-      title: todoValue,
-      completed: false,
-    };
-    addTodo(todo);
-    setOpen(true);
-    setTodoValue("");
-  };
-
   return (
     <Container>
-      <Stack width={"500px"} mx={"auto"}>
-        <form onSubmit={handleSubmit}>
-          <Typography variant="h5" color={"white"} textAlign={"center"} my={2}>
-            Todos
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              columnGap: "10px",
-            }}
-          >
-            <TodoInput setTodoValue={setTodoValue} todoValue={todoValue} />
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ width: "150px" }}
-              type="submit"
-              disabled={!todoValue}
+      <Routes>
+        <Route path="/" element={<Todo />} />
+        <Route path="/products" element={<Products />} />
+        <Route
+          path="*"
+          element={
+            <Typography
+              component={"h6"}
+              variant="h6"
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
             >
-              Add
-            </Button>
-          </Box>
-          <Main />
-        </form>
-        <MuiSnackbar
-          open={open}
-          setOpen={setOpen}
-          message={"User added successfully!"}
+              Page not found!
+            </Typography>
+          }
         />
-      </Stack>
+      </Routes>
     </Container>
   );
 };
