@@ -57,7 +57,7 @@ export const Products = () => {
           Error: {error.message}
         </Typography>
       )}
-      {!products?.length && (
+      {!isLoading && !products?.length && (
         <Typography
           component={"h3"}
           variant="h4"
