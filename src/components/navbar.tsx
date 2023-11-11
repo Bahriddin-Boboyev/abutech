@@ -1,12 +1,14 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 export const Navbar = () => {
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: "transparent" }}>
-      <AppBar position="static" sx={{ bgcolor: "transparent" }}>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="fixed" sx={{ bgcolor: "rgb(30 41 59)" }}>
         <Toolbar
           variant="dense"
           sx={{
@@ -15,24 +17,31 @@ export const Navbar = () => {
             justifyContent: "space-evenly",
           }}
         >
-          <Typography
-            variant="h6"
-            color="inherit"
-            component="a"
+          <Button
+            startIcon={<HomeIcon />}
+            sx={{ color: "inherit" }}
+            size="large"
             href="/"
-            sx={{ textDecoration: "none" }}
           >
             Home
-          </Typography>
-          <Typography
+          </Button>
+          <Button
+            startIcon={<ShoppingBasketIcon />}
+            sx={{ color: "inherit" }}
+            size="large"
+            href="/products"
+          >
+            Products
+          </Button>
+          {/* <Typography 
             variant="h6"
             color="inherit"
             component="a"
             href="/products"
             sx={{ textDecoration: "none" }}
           >
-            Products
-          </Typography>
+            
+          </Typography> */}
         </Toolbar>
       </AppBar>
     </Box>
