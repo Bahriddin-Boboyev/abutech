@@ -1,4 +1,4 @@
-import { ITodo, IModal } from "./../../types.d";
+import { ITodo, IModal, SelectType } from "./../../types.d";
 import { makeAutoObservable } from "mobx";
 
 const initialValue: ITodo[] = [
@@ -12,6 +12,7 @@ const initialValue: ITodo[] = [
 
 class TodoSlice {
   todo: ITodo[] = initialValue;
+  viewTodo: ITodo[] = this.todo;
   modal: IModal | object = {};
   constructor() {
     makeAutoObservable(this);
@@ -19,6 +20,7 @@ class TodoSlice {
 
   addTodo = (todo: ITodo) => {
     this.todo = [...this.todo, todo];
+    this.viewTodo = this.todo;
   };
 
   editTodo = (id: string, title: string) => {
@@ -28,10 +30,12 @@ class TodoSlice {
       }
       return item;
     });
+    this.viewTodo = this.todo;
   };
 
   removeTodo = (id: string) => {
     this.todo = this.todo.filter((item) => item.id != id);
+    this.viewTodo = this.todo;
   };
 
   isCheckedTodo = (id: string) => {
@@ -41,6 +45,17 @@ class TodoSlice {
       }
       return item;
     });
+    this.viewTodo = this.todo;
+  };
+
+  todoView = (value: SelectType) => {
+    if (value === "completed") {
+      this.viewTodo = this.todo.filter((item) => item.done === true);
+    } else if (value === "incomplete") {
+      this.viewTodo = this.todo.filter((item) => item.done === false);
+    } else {
+      this.viewTodo = this.todo;
+    }
   };
 
   addModal = (modalValue: IModal): void => {

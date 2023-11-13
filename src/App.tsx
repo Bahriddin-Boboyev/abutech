@@ -3,7 +3,6 @@ import TodoStore from "./store/store";
 import { toJS } from "mobx";
 import { useState } from "react";
 import { SelectType } from "../types";
-import { format } from "date-fns";
 import {
   Container,
   Typography,
@@ -14,14 +13,13 @@ import {
   Select,
   MenuItem,
   List,
-  ListItem,
-  Checkbox,
 } from "@mui/material";
 import { Modal } from "./components/modal";
+import { TodoList } from "./components/list";
 
 const App = observer(() => {
   const [selected, setSelected] = useState<SelectType>("all");
-  const { todo, addModal, removeTodo, isCheckedTodo, modal } = TodoStore;
+  const { viewTodo, addModal, modal, todoView } = TodoStore;
 
   console.log(toJS(modal));
 
@@ -54,13 +52,16 @@ const App = observer(() => {
           Add Todo
         </Button>
         <FormControl sx={{ width: "200px" }}>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <InputLabel id="demo-simple-select-label">Select</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={selected}
             label="Status"
-            onChange={(e) => setSelected(e.target.value as SelectType)}
+            onChange={(e) => (
+              setSelected(e.target.value as SelectType),
+              todoView(e.target.value as SelectType)
+            )}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="incomplete">Incomplete</MenuItem>
@@ -70,6 +71,7 @@ const App = observer(() => {
       </Box>
       <Box
         bgcolor="#1b263b"
+        position="relative"
         sx={{
           width: "70%",
           height: "350px",
@@ -79,77 +81,27 @@ const App = observer(() => {
           overflowY: "scroll",
         }}
       >
-        <List sx={{ display: "grid", gap: "15px" }}>
-          {todo.map((item) => (
-            <ListItem
-              key={item.id}
-              sx={{
-                bgcolor: "#003049",
-                width: "90%",
-                mx: "auto",
-                borderRadius: "10px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Box width="500px" display="flex" alignItems="center">
-                <Checkbox
-                  checked={item.done}
-                  sx={{ color: "white" }}
-                  onClick={() => isCheckedTodo(item.id)}
-                />
-                <Typography
-                  color={item.done ? "red" : "white"}
-                  sx={{ textDecoration: item.done ? "line-through" : "unset" }}
-                >
-                  {item.title}
-                </Typography>
-              </Box>
-
-              <Typography color="white" sx={{ fontSize: "12px" }}>
-                {format(item.date, "dd-MM-yyyy")}
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "50px",
-                }}
-              >
-                <Button
-                  color="error"
-                  size="small"
-                  sx={{
-                    padding: "0",
-                    minWidth: "30px",
-                    minHeight: "30px",
-                    fontSize: "15px",
-                  }}
-                  onClick={() => removeTodo(item.id)}
-                >
-                  <i className="fa-solid fa-trash"></i>
-                </Button>
-                <Button
-                  color="warning"
-                  size="small"
-                  sx={{
-                    padding: "0",
-                    minWidth: "30px",
-                    minHeight: "30px",
-                    fontSize: "15px",
-                  }}
-                  onClick={() =>
-                    addModal({ isOpen: true, name: "edit", value: item })
-                  }
-                >
-                  <i className="fa-solid fa-pen-to-square"></i>
-                </Button>
-              </Box>
-            </ListItem>
-          ))}
-        </List>
+        {!viewTodo.length ? (
+          <Typography
+            component={"h3"}
+            variant="h5"
+            color="#2196f3"
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            Todos empty
+          </Typography>
+        ) : (
+          <List sx={{ display: "grid", gap: "15px" }}>
+            {viewTodo.map((item) => (
+              <TodoList key={item.id} item={item} />
+            ))}
+          </List>
+        )}
       </Box>
       <Modal />
     </Container>
