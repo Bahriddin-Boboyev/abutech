@@ -3,6 +3,8 @@ import TodoStore from "./store/store";
 import { toJS } from "mobx";
 import { useState } from "react";
 import { SelectType } from "../types";
+import { Modal } from "./components/modal";
+import { TodoList } from "./components/list";
 import {
   Container,
   Typography,
@@ -14,8 +16,6 @@ import {
   MenuItem,
   List,
 } from "@mui/material";
-import { Modal } from "./components/modal";
-import { TodoList } from "./components/list";
 
 const App = observer(() => {
   const [selected, setSelected] = useState<SelectType>("all");
